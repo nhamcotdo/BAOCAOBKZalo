@@ -1,0 +1,20 @@
+package Main;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class test24 {
+
+  public static void main(String[] args) {
+    //save txt
+    String s = "Hello World";
+    String fileName = ".\\test.txt";
+    try {
+      FileWriter fw = new FileWriter(fileName);
+      fw.write(s);
+      fw.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+}

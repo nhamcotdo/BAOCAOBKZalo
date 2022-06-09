@@ -1,0 +1,52 @@
+package Main;
+import javax.swing.*;
+import javax.swing.text.*;
+import javax.swing.text.html.*;
+
+class test {
+
+    public static void main(String[] args) {
+
+        JFrame frame = new JFrame();
+        JEditorPane edPane = new JEditorPane(); 
+
+        try {
+
+            edPane.setContentType("text/html");
+
+            System.out.println(edPane.getText());
+
+            HTMLEditorKit hek = new HTMLEditorKit();
+
+            edPane.setEditorKit(hek);
+
+            HTMLDocument doc = (HTMLDocument) edPane.getDocument();
+
+            doc.insertString(0, "Test testing", null);
+
+            Element[] roots = doc.getRootElements();
+            Element body = null;
+            for( int i = 0; i < roots[0].getElementCount(); i++ ) {
+                Element element = roots[0].getElement( i );
+                if( element.getAttributes().getAttribute( StyleConstants.NameAttribute ) == HTML.Tag.BODY ) {
+                    body = element;
+                    break;
+                }
+            }
+
+            doc.insertAfterEnd(body,"<img src='https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/287041921_7638076472900646_8249718404296470440_n.jpg?stp=dst-jpg_p526x296&_nc_cat=103&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=xJsMT5x8pBgAX9Yjxm7&_nc_ht=scontent.fdad3-1.fna&oh=00_AT-FO_fMU3XShsqoLFomGcCpYZNvHlZZSxBnq7Ui1PJyMQ&oe=62A6A860'"+">");
+            System.out.println(edPane.getText());
+        } catch(BadLocationException e) {
+        } catch (java.io.IOException e) {}
+
+
+        frame.add(edPane);
+
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+
+
+    }
+
+}
