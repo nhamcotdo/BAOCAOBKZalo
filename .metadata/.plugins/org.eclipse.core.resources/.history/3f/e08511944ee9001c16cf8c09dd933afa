@@ -16,7 +16,6 @@ public class MulticastSender {
 		try {
 			// Get the address that we are going to connect to.
 			address = InetAddress.getByName(GROUP_ADDRESS);
-			System.out.println(address);
 
 			// Create a new Multicast socket
 			socket = new DatagramSocket();
