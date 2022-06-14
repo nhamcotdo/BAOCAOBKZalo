@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.*;
+import java.net.UnknownHostException;
 import java.util.Base64;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -26,17 +27,55 @@ public class GUI extends Thread {
   private static boolean imgsend = false;
 
   @Override
-  public void run() {
+  public void run(){
     //receiver
     while (true) {
       tpnMessage.setContentType("text/html");
       HTMLDocument doc = (HTMLDocument) tpnMessage.getDocument();
-      String txt = MulticastReceiver.Receiver();
+      String txt = null;
+	try {
+		txt = Client.Receiver();
+	} catch (UnknownHostException e2) {
+		// TODO Auto-generated catch block
+		e2.printStackTrace();
+	} catch (IOException e2) {
+		// TODO Auto-generated catch block
+		e2.printStackTrace();
+	}
+	
+	String msg = null;
 
-      if (txt.contains("---imgstart---:")) {
+	if(txt.contains("---imgstart---:"))
+	{
+		do
+		{
+			msg+=txt;
+			try {
+				txt = Client.Receiver();
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		while(!(txt.contains("---imgend---:")));
+	}
+	else {
+		msg = txt;
+	}
+	
+	
+	
+	
+	
+	
+	
+      if (msg.contains("---imgstart---:")) {
     	  File outputfile = null;
         System.out.println("start anh");
-        txt = txt.replace("---imgstart---:", "");
+        msg = msg.replace("---imgstart---:", "");
         // decode base64
         byte[] imageByte = Base64.getDecoder().decode(txt);
         // convert byte array back to image
@@ -69,7 +108,7 @@ public class GUI extends Thread {
         try {
           doc.insertAfterEnd(
             doc.getCharacterElement(doc.getLength()),
-            "<b>" + txt + "<br></b>"
+            "<b>" + msg + "<br></b>"
           );
         } catch (BadLocationException e) {
           // TODO Auto-generated catch block

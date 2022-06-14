@@ -8,7 +8,7 @@ import java.net.InetAddress;
 public class MulticastSender {
 
 	public static final String GROUP_ADDRESS = "239.255.255.252";
-	public static final int PORT = 8888;
+	public static final int PORT = 4999;
 	public static InetAddress address ;
 	public static void Send(String msg)
 	{

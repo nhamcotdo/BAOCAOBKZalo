@@ -16,7 +16,7 @@ public class MulticastReceiver {
 			InetAddress address = InetAddress.getByName("239.255.255.252");
 
 			// Create a new Multicast socket
-			socket = new MulticastSocket(8888);
+			socket = new MulticastSocket(4999);
 
 			// Joint the Multicast group
 			socket.joinGroup(address );
